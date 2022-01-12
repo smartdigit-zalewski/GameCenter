@@ -1,6 +1,7 @@
-package com.smartdigit.zalewski.gamecenter.config;
+package com.smartdigit.zalewski.gamecenter.config.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -25,24 +26,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        /*
-        auth.inMemoryAuthentication()
-                .withUser("admin").password("{noop}1234").roles(role.ADMIN.toString())
-                .and()
-                .withUser("user").password("{noop}1234").roles(role.USER.toString());
 
-         */
         auth.jdbcAuthentication().dataSource(dataSource);
-
 
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
+                .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
+                .antMatchers("/resources/static/css/**").permitAll()
                 .antMatchers("/actuator/**").hasRole(role.ADMIN.toString())
-                .anyRequest().permitAll()
+                .anyRequest().authenticated()
                 .and()
-                .formLogin();
+                .formLogin().permitAll();
     }
 }
