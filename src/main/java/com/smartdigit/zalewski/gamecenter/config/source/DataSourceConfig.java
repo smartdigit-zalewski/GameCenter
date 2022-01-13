@@ -1,4 +1,4 @@
-package com.smartdigit.zalewski.gamecenter.config;
+package com.smartdigit.zalewski.gamecenter.config.source;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.jdbc.DataSourceBuilder;

@@ -3,6 +3,7 @@ package com.smartdigit.zalewski.gamecenter.domain;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
 
@@ -11,6 +12,7 @@ import javax.persistence.*;
 @Setter
 @Entity
 @Table(name = "player")
+@Component
 public class Player {
 
     @Id
@@ -31,6 +33,14 @@ public class Player {
         this.email = email;
     }
 
-
-
+    @Override
+    public String toString() {
+        return "Player{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", email='" + email + '\'' +
+                ", totalScore=" + totalScore +
+                ", gamesPlayed=" + gamesPlayed +
+                '}';
+    }
 }

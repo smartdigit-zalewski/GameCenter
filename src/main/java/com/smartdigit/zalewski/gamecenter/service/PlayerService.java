@@ -14,7 +14,7 @@ import java.security.Principal;
 @Transactional
 public class PlayerService {
 
-    PlayerRepository repository;
+    private final PlayerRepository repository;
 
     @Autowired
     public PlayerService(PlayerRepository repository) {
@@ -26,6 +26,16 @@ public class PlayerService {
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         return repository.getByUsername(auth.getName());
+    }
+
+    public Player getByUsername(String username) {
+
+        return repository.getByUsername(username);
+    }
+
+    public Player saveNewPlayer(Player player) {
+        return repository.save(player);
+
     }
 
 

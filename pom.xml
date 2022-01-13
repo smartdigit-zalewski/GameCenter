@@ -12,9 +12,10 @@
 	<artifactId>GameCenter</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>GameCenter</name>
-	<description>gamecenter</description>
+	<description>Game center</description>
 	<properties>
 		<java.version>11</java.version>
+		<hibernate-types.version>2.14.0</hibernate-types.version>
 	</properties>
 	<dependencies>
 
@@ -96,6 +97,17 @@
 			<groupId>org.flywaydb</groupId>
 			<artifactId>flyway-core</artifactId>
 			<version>8.4.1</version>
+		</dependency>
+		<!-- Hibernate JSON parser -->
+		<dependency>
+			<groupId>com.vladmihalcea</groupId>
+			<artifactId>hibernate-types-55</artifactId>
+			<version>${hibernate-types.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>2.13.1</version>
 		</dependency>
 
 
