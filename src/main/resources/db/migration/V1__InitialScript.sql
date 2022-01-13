@@ -42,7 +42,7 @@ CREATE TABLE game (
                       player_one_id BIGINT,
                       player_two_id BIGINT,
                       created TIMESTAMP,
-                      fleets VARCHAR(1024),
+                      fleets VARCHAR(2048),
                       turn VARCHAR(64),
                       CONSTRAINT fk_game_player_one FOREIGN KEY (player_one_id) REFERENCES player(id),
                       CONSTRAINT fk_game_player_two FOREIGN KEY (player_two_id) REFERENCES player(id)

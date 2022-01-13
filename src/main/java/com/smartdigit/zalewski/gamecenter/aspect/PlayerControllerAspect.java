@@ -18,10 +18,9 @@ public class PlayerControllerAspect {
     @Pointcut("execution(* com.smartdigit.zalewski.gamecenter.controller.HomePageController.getHomePage(..))")
     public void afterSecurityLogging(){};
 
-    @AfterReturning("afterSecurityLogging()")
+    //@AfterReturning("afterSecurityLogging()")
     public void printLoggedUser(){
         Authentication auth =  SecurityContextHolder.getContext().getAuthentication();
-        System.out.println(auth);
 
         if (!(auth instanceof AnonymousAuthenticationToken)) {
             Player player = new Player();

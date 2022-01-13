@@ -24,7 +24,7 @@ public class TestRunner {
         this.playerService = playerService;
         this.gameService = gameService;
     }
-
+    /*
     @Bean
     CommandLineRunner testingDB() {
 
@@ -49,8 +49,12 @@ public class TestRunner {
             System.out.println("Game created");
             System.out.println(game);
 
+
+
         };
     }
+
+         */
 
 
 }

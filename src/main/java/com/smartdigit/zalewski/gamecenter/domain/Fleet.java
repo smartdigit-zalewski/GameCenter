@@ -44,6 +44,10 @@ public class Fleet {
         return false;
     }
 
+    public void setFleetPositions() {
+
+    }
+
 
     @Override
     public String toString() {

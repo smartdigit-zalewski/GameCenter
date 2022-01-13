@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
     <title>HomePage</title>
 
     <meta charset="utf-8">
@@ -11,10 +10,66 @@
     <link th:href="@{/css/main-layout.css}" rel="stylesheet" />
 </head>
 <body>
-<div>
-    <div th:insert="fragments/navbar">
+<div class="container">
+    <div th:insert="fragments/navbar" class="row"></div>
+    <div class="row"></div>
+    <div class="row mt-1">
+        <div class="col"></div>
+        <div class="col">
+            <a th:href="@{/createGame}" class="btn btn-info btn-sm">
+                Create game
+            </a>
+        </div>
+        <div class="col"></div>
+        <div class="col-7">
+            <table class="table table-bordered table-striped">
+                <thead class="thead-dark">
+                <tr>
+                    <th>Player no. 1</th>
+                    <th>Game Status</th>
+                    <th>Created</th>
+                    <th>Action</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                <tr th:each="tempGame : ${gamesToJoin}">
+
+                    <td th:text="${tempGame.getFirstPlayer().getUsername()}" />
+                    <td th:text="${tempGame.gameStatus}" />
+                    <td th:text="${tempGame.created}" />
+
+                    <td>
+                        <!-- Add "join" button/link -->
+                        <span th:if="${player.id != tempGame.getFirstPlayer().id}" class="d-inline">
+                            <a th:href="@{/joinGame(gameId=${tempGame.id})}"
+                               class="btn btn-info btn-sm"
+                               onclick="if (!(confirm('Are you sure you want to join this game?'))) return false">
+                                Join
+                            </a>
+                        </span>
+                        <!-- Add "enter/delete" to created by self -->
+                        <span th:if="${player.id == tempGame.getFirstPlayer().id}" class="d-inline">
+                            <a th:href="@{/enter(gameId=${tempGame.id})}"
+                               class="btn btn-info btn-sm">
+                            Enter
+                            </a>
+                            <a th:href="@{/delete(gameId=${tempGame.id})}"
+                               class="btn btn-danger btn-sm"
+                               onclick="if (!(confirm('Are you sure you want to delete this game?'))) return false">
+                            Delete
+                            </a>
+                        </span>
+
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
 
     </div>
 </div>
+
+
 </body>
 </html>

@@ -25,6 +25,7 @@ public class HashMapConverter implements AttributeConverter<Map<Long, Fleet>, St
 
         try {
             fleetsJson = objectMapper.writeValueAsString(fleets);
+            System.out.println("FleetJson: " + fleetsJson);
         } catch (IOException e){
             System.out.println("Couldn't write map to json: " + e.getMessage());
         }
@@ -40,5 +41,10 @@ public class HashMapConverter implements AttributeConverter<Map<Long, Fleet>, St
             System.out.println("Couldn't read json to map " + e.getMessage());
         }
         return fleets;
+    }
+
+    public static HashMapConverter getInstance() {
+
+        return new HashMapConverter(new ObjectMapper());
     }
 }
