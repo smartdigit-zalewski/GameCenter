@@ -35,7 +35,6 @@ public class GameService {
         game.setGameType(GameType.BATTLE_SHIPS);
         game.setFirstPlayer(player);
         game.setCreated(LocalDateTime.now());
-        game.addFleet(player);
         game.setGameStatus(GameStatus.WAITS_FOR_SECOND_PLAYER);
 
         return repository.save(game);

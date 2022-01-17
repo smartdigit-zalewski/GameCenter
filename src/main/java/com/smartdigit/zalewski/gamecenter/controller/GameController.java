@@ -11,9 +11,11 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
+@RequestMapping("/games")
 @Component
 public class GameController {
 
@@ -35,8 +37,9 @@ public class GameController {
         Game game = gameService.saveNewGame(player);
 
         model.addAttribute("currentGame", game);
+        model.addAttribute("player", addCurrentPlayerToModel());
 
-        return "game-page";
+        return "prepare-game";
     }
 
     @GetMapping("/joinGame")
@@ -45,7 +48,6 @@ public class GameController {
         Game game = gameService.getGameById(id);
         if (!(game.getFirstPlayer().equals(secondPlayer))) {
             game.setSecondPlayer(secondPlayer);
-            game.addFleet(secondPlayer);
             game.setGameStatus(GameStatus.SETTING_POSITIONS);
             game.setTurn(Game.Turn.FIRST_PLAYER_TURN);
             game = gameService.updateGame(game);
@@ -55,24 +57,29 @@ public class GameController {
         }
 
         model.addAttribute("currentGame", game);
+        model.addAttribute("player", addCurrentPlayerToModel());
 
-        return "game-page";
+        return "prepare-game";
     }
 
-    @GetMapping("/enter")
+    @GetMapping("/prepareGame")
     public String enterGame(@RequestParam("gameId") Long id, Model model){
         Game game = gameService.getGameById(id);
         model.addAttribute("currentGame", game);
-
-        return "game-page";
+        model.addAttribute("player", addCurrentPlayerToModel());
+        return "prepare-game";
     }
 
-    @GetMapping("/delete")
+    @GetMapping("/deleteGame")
     public String deleteGame(@RequestParam("gameId") Long id){
 
         gameService.deleteGameById(id);
 
         return "redirect:/";
+    }
+
+    private Player addCurrentPlayerToModel() {
+        return playerService.getLoggedPlayer();
     }
 
 

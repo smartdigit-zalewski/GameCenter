@@ -59,10 +59,12 @@ public class Game implements Cloneable {
     private String fleets = "";
 
     @Transient
-    private Map<Long,Fleet> fleetsMap;
+    private Map<String,Fleet> fleetsMap;
 
 
-    public boolean addFleet(Player player) {
+    public boolean addFleet(Player player, Fleet fleet) {
+
+        String id = String.valueOf(player.getId());
 
         if(!(fleets.isEmpty() || fleets.equalsIgnoreCase("null"))) {
             fleetsMap = hmc.convertToEntityAttribute(fleets);
@@ -71,12 +73,12 @@ public class Game implements Cloneable {
         if (fleetsMap == null) {
             fleetsMap = new HashMap<>();
         } else {
-            if(fleetsMap.containsKey(player.getId())){
+            if(fleetsMap.containsKey(id)){
                 return false;
             }
         }
 
-        fleetsMap.put(player.getId(), new Fleet(player.getUsername()));
+        fleetsMap.put(id, fleet);
         fleets = hmc.convertToDatabaseColumn(fleetsMap);
 
         return true;
@@ -90,8 +92,7 @@ public class Game implements Cloneable {
 
     }
 
-    public Map<Long,Fleet> getFleetMap() {
-
+    public Map<String,Fleet> getFleetMap() {
         this.fleetsMap = hmc.convertToEntityAttribute(fleets);
         return this.fleetsMap;
     }

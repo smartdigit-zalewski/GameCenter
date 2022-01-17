@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.util.Map;
 
 @Component
-public class HashMapConverter implements AttributeConverter<Map<Long, Fleet>, String> {
+public class HashMapConverter implements AttributeConverter<Map<String, Fleet>, String> {
 
     private final ObjectMapper objectMapper;
 
@@ -20,12 +20,11 @@ public class HashMapConverter implements AttributeConverter<Map<Long, Fleet>, St
     }
 
     @Override
-    public String convertToDatabaseColumn(Map<Long, Fleet> fleets) {
+    public String convertToDatabaseColumn(Map<String, Fleet> fleets) {
         String fleetsJson = null;
 
         try {
             fleetsJson = objectMapper.writeValueAsString(fleets);
-            System.out.println("FleetJson: " + fleetsJson);
         } catch (IOException e){
             System.out.println("Couldn't write map to json: " + e.getMessage());
         }
@@ -33,8 +32,8 @@ public class HashMapConverter implements AttributeConverter<Map<Long, Fleet>, St
     }
 
     @Override
-    public Map<Long, Fleet> convertToEntityAttribute(String fleetsJson) {
-        Map<Long,Fleet> fleets = null;
+    public Map<String, Fleet> convertToEntityAttribute(String fleetsJson) {
+        Map<String,Fleet> fleets = null;
         try {
             fleets = objectMapper.readValue(fleetsJson, Map.class);
         } catch (IOException e) {

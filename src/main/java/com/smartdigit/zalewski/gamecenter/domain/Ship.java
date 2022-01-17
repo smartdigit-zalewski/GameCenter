@@ -3,6 +3,7 @@ package com.smartdigit.zalewski.gamecenter.domain;
 import com.smartdigit.zalewski.gamecenter.domain.enums.ShipStatus;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
 

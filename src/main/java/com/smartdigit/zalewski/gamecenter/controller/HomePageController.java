@@ -27,16 +27,12 @@ public class HomePageController {
 
     @GetMapping("/")
     public String getHomePage(Model model) {
-        Player loggedPlayer = playerService.getLoggedPlayer();
         List<Game> gamesToJoin = gameService.getGamesWithStatus(GameStatus.WAITS_FOR_SECOND_PLAYER);
 
         if(!(gamesToJoin == null || gamesToJoin.size() < 1)) {
             model.addAttribute("gamesToJoin",gamesToJoin);
         }
-
-        model.addAttribute("player",loggedPlayer);
-
-
+        model.addAttribute("player",addCurrentPlayerToModel());
         return "homepage";
     }
 
@@ -45,12 +41,8 @@ public class HomePageController {
         return "fragments";
     }
 
-    public String getNavbar(Model model){
-        //Player loggedPlayer = playerService.getLoggedPlayer();
 
-        //model.addAttribute("player",loggedPlayer);
-
-        return "fragments/navbar";
+    private Player addCurrentPlayerToModel() {
+        return playerService.getLoggedPlayer();
     }
-
 }

@@ -33,6 +33,11 @@ public class PlayerService {
         return repository.getByUsername(username);
     }
 
+    public Player getById(long id) {
+
+        return repository.getById(id);
+    }
+
     public Player saveNewPlayer(Player player) {
         return repository.save(player);
 

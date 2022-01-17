@@ -1,11 +1,4 @@
 html body {
-    margin: 0;
-    display: grid;
-    grid-template-rows: auto;
-    grid-template-areas:
-            "navbar"
-            "middlebar"
-            "footer";
-    background-color: whitesmoke;
+    height: auto;
 
 }
