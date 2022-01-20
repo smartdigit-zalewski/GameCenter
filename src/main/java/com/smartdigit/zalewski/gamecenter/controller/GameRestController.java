@@ -30,6 +30,8 @@ public class GameRestController {
     @RequestMapping(value ="/games/{id}/fleets", method = RequestMethod.POST)
     public RestResponse persistFleet(@PathVariable long id, @RequestBody FleetDTO dto){
 
+
+        // TODO: REFACTOR TO BE EXECUTED BY GAME CLASS
         Game game = applicationContext.getBean(Game.class);
         Game tmpGame = gameService.getGameById(id);
         if(tmpGame.getId() != id) return new RestResponse("Failure");

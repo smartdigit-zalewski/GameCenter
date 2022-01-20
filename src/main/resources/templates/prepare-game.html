@@ -14,7 +14,7 @@
         let playerId = [[${player.id}]];
     </script>
 </head>
-<body onload="drawGrid('prepare')">
+<body onload="onLoad()">
     <div class="container">
         <!--navigation bar -->
         <div th:insert="fragments/navbar :: navbar(${player})" class="row"></div>
@@ -29,12 +29,7 @@
             </div>
             <div id="buttonsContainer" class="col">
                 <h5 class="d-flex justify-content-center">Choose ship to place on grid</h5>
-                <button onclick="addShipToFleet(1)">Ship 1</button>
-                <button onclick="addShipToFleet(2)">Ship 2</button>
-                <button onclick="addShipToFleet(3)">Ship 3</button>
-                <button onclick="addShipToFleet(4)">Ship 4</button>
-                <button onclick="addShipToFleet(5)">Ship 5</button>
-                <button onclick="persistFleet(gameId,playerId)">Confirm fleet</button>
+                <!-- BUTTONS CREATED BY JS -->
             </div>
 
 

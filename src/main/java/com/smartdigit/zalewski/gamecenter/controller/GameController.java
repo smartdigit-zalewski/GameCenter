@@ -31,9 +31,7 @@ public class GameController {
 
     @GetMapping("/createGame")
     public String createGame(Model model){
-        System.out.println("Create game controller invoked");
         Player player = playerService.getLoggedPlayer();
-        System.out.println("Print current player:  " + player);
         Game game = gameService.saveNewGame(player);
 
         model.addAttribute("currentGame", game);
@@ -46,6 +44,8 @@ public class GameController {
     public String joinGame(@RequestParam("gameId") Long id, Model model) {
         Player secondPlayer = playerService.getLoggedPlayer();
         Game game = gameService.getGameById(id);
+
+        // TODO: Refactor to execute below by game class
         if (!(game.getFirstPlayer().equals(secondPlayer))) {
             game.setSecondPlayer(secondPlayer);
             game.setGameStatus(GameStatus.SETTING_POSITIONS);

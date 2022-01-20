@@ -25,7 +25,7 @@ public class HomePageController {
         this.gameService = gameService;
     }
 
-    @GetMapping("/")
+    @GetMapping({"/","/homepage","/homepage.html"})
     public String getHomePage(Model model) {
         List<Game> gamesToJoin = gameService.getGamesWithStatus(GameStatus.WAITS_FOR_SECOND_PLAYER);
 
