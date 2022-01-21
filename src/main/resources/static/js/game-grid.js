@@ -1,3 +1,8 @@
+//GRID COLORS
+const SHIP_COLOR = 'LightCoral';
+const NOT_ALLOWED_FIELDS = 'LightGray';
+const ALLOWED_FIELDS = 'White';
+
 // Create map to keep all ships before sending them to backend
 let fleet = new Map();
 // List of all grid fields with their IDs
@@ -6,6 +11,7 @@ let cellArray = [];
 let shipArray = [];
 // temp value to count ship cells
 let tempVal = 1;
+
 
 function onLoad() {
     drawGrid();
@@ -19,18 +25,18 @@ function drawGrid() {
     let cols = 10;
     let battleground = document.getElementById("battleground");
     // CREATE GRID USING BOOTSTRAP
-    for(i=0; i < rows; i++) {
+    for(let i=0; i < rows; i++) {
         let row = document.createElement("div")
         row.classList.add('row');
         //row.style.border ='0.2px solid black';
         battleground.appendChild(row);
-        for(j=0; j < cols; j++) {
+        for(let j=0; j < cols; j++) {
             // Create new div inside battleground and make it correct size
             let col = document.createElement("div");
             col.classList.add('col')
             col.id = 'c' + j + i;
             cellArray.push(col.id);
-            col.style.backgroundColor = 'white';
+            col.style.backgroundColor = ALLOWED_FIELDS;
             col.style.height = '60px';
             col.style.border = '0.2px solid black';
             row.appendChild(col);
@@ -39,29 +45,33 @@ function drawGrid() {
 }
 
 function drawShipButtons(){
-
     let NUMBER_OF_BUTTONS = 5;
     let container = document.getElementById('buttonsContainer');
-    for(i=1;i <= NUMBER_OF_BUTTONS; i++ ){
+    let fragment = document.createDocumentFragment();
+    for(let i=1;i <= NUMBER_OF_BUTTONS; i++ ){
         let button = document.createElement("button");
-        button.onclick = function() {markShip(i)};
+        button.onclick = function () {markShip(i)}
         button.classList.add('btn');
         button.classList.add('btn-danger');
-        button.id = 'ship' + i;
+        button.classList.add('btn-lg');
+        button.classList.add('mb-1')
+        button.id = 'ship_' + i;
         button.innerText = 'Ship ' + i;
-        container.appendChild(button);
+        fragment.appendChild(button);
+        fragment.appendChild(document.createElement("br"));
+
     }
-
-
+    container.appendChild(fragment);
 }
 
 // Once player choose Ship to set on grid add onClick to all fields
 function markShip(shipLength) {
+    markCurrentButton('ship_' + shipLength);
     console.log("Mark ship with length: " + shipLength);
     cellArray.forEach( i => {
             let cell = document.getElementById(i);
             cell.onclick = null;
-            cell.style.backgroundColor = 'white';
+            cell.style.backgroundColor = ALLOWED_FIELDS;
             cell.onclick = function () {markField(shipLength, i)};
         }
     )
@@ -70,7 +80,8 @@ function markShip(shipLength) {
 // Remove onClick when all ship cells are filled
 function removeOnClickFromFields() {
     cellArray.forEach(i => {
-        document.getElementById(i).onclick = null;
+        let field = document.getElementById(i);
+        field.onclick = null;
     })
 }
 
@@ -79,16 +90,16 @@ function markField(shipLength, id) {
     let cell = document.getElementById(id);
     if(cell.style.backgroundColor === 'white'){
         console.log("Chosen field: " + cell.id + ", field color change: white -> green");
-        cell.style.backgroundColor = 'green';
+        cell.style.backgroundColor =  SHIP_COLOR;
         handleClicks(shipLength, id);
         removeFieldFromArray(id);
         calculatePossibleFields(id)
-    } else if (cell.style.backgroundColor === 'grey') {
-        console.log("Chosen field is grey, user can't select it. Add warning")
+    } else if (cell.style.backgroundColor === NOT_ALLOWED_FIELDS) {
+        console.log("Chosen field is not allowed, user can't select it. Add warning")
         confirm('You can\'t select that field')
     } else {
         console.log("Selected previously selected field: NOT IMPLEMENTED YET")
-        cell.style.backgroundColor = 'white';
+        cell.style.backgroundColor = ALLOWED_FIELDS;
     }
 }
 function removeFieldFromArray(id) {
@@ -106,6 +117,7 @@ function handleClicks(shipLength, id) {
         shipArray.push(id);
         console.log("Removing onClick function for grid and adding warning");
         removeOnClickFromFields();
+        disableCurrentButton('ship_' + shipLength);
         cellArray.forEach(i => {
             let cell = document.getElementById(i);
             cell.onclick =function () {if (!(confirm('All fields for this ship are set.'))) return false}
@@ -138,13 +150,13 @@ function calculatePossibleFields(fieldName) {
     cellArray.forEach(i => {
         if(i !== fieldName) {
             let cell = document.getElementById(i);
-            if(cell.style.backgroundColor === 'green') {
+            if(cell.style.backgroundColor === SHIP_COLOR) {
                 console.log("Green field detected : " + i);
             } else {
                 if(possibleFieldsMap.has(i)){
-                    cell.style.backgroundColor = 'white';
+                    cell.style.backgroundColor = ALLOWED_FIELDS;
                 } else {
-                    cell.style.backgroundColor = 'grey';
+                    cell.style.backgroundColor = NOT_ALLOWED_FIELDS;
                 }
             }
         }
@@ -153,6 +165,20 @@ function calculatePossibleFields(fieldName) {
 
 function checkFleetCompletion() {
     return fleet.size === 5;
+}
+
+function disableCurrentButton(buttonName){
+    let button = document.getElementById(buttonName);
+    button.setAttribute('disabled', 'disabled');
+    button.classList.remove('btn-danger');
+    button.classList.remove('active')
+    button.classList.add('btn-outline-danger');
+}
+
+function markCurrentButton(buttonName) {
+    let button = document.getElementById(buttonName);
+    button.classList.add('active')
+
 }
 
 function blockAllButtons() {
