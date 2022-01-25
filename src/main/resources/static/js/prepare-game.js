@@ -94,6 +94,8 @@ function markField(shipLength, id) {
         handleClicks(shipLength, id);
         removeFieldFromArray(id);
         calculatePossibleFields(id)
+
+
     } else if (cell.style.backgroundColor === NOT_ALLOWED_FIELDS) {
         console.log("Chosen field is not allowed, user can't select it. Add warning")
         confirm('You can\'t select that field')
@@ -126,6 +128,11 @@ function handleClicks(shipLength, id) {
         fleet.set('ship_' + shipLength, shipArray);
         tempVal = 1;
         shipArray = [];
+        if(checkFleetCompletion()) {
+            console.log("Fleet completed, block all buttons for ships and show enter game button")
+            blockAllButtons();
+            showEnterGameButton()
+        }
     } else {
         console.log("Add marked field to temporary array")
         shipArray.push(id);

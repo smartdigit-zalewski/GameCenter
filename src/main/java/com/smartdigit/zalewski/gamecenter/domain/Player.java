@@ -14,11 +14,9 @@ import java.util.Objects;
 @Entity
 @Table(name = "player")
 @Component
-public class Player {
+public class Player extends BaseEntity{
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+
     private String username;
     private String email;
     @Column(name = "total_score")
@@ -39,18 +37,18 @@ public class Player {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Player player = (Player) o;
-        return id == player.id;
+        return totalScore == player.totalScore && gamesPlayed == player.gamesPlayed && Objects.equals(username, player.username) && Objects.equals(email, player.email);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id);
+        return Objects.hash(username, email, totalScore, gamesPlayed);
     }
 
     @Override
     public String toString() {
         return "Player{" +
-                "id=" + id +
+                "id=" + this.getId() +
                 ", username='" + username + '\'' +
                 ", email='" + email + '\'' +
                 ", totalScore=" + totalScore +

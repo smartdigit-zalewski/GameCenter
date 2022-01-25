@@ -27,7 +27,7 @@ import java.util.Map;
 @Component
 @NoArgsConstructor
 @Scope("prototype")
-public class Game implements Cloneable {
+public class Game extends BaseEntity implements Cloneable {
 
     @Autowired
     @Transient
@@ -39,9 +39,6 @@ public class Game implements Cloneable {
     }
 
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
     @Enumerated(EnumType.STRING)
     private GameType gameType;
     @Enumerated(EnumType.STRING)
@@ -98,7 +95,7 @@ public class Game implements Cloneable {
     }
 
     public void copyFields(Game game) {
-        this.id = game.getId();
+        super.setId(game.getId());
         this.gameType = game.getGameType();
         this.gameStatus = game.getGameStatus();
         this.turn = game.getTurn();
@@ -112,7 +109,7 @@ public class Game implements Cloneable {
     @Override
     public String toString() {
         return "Game{" +
-                "id=" + id +
+                "id=" + super.getId() +
                 ", gameType=" + gameType +
                 ", gameStatus=" + gameStatus +
                 ", turn=" + turn +
