@@ -10,7 +10,7 @@ import org.springframework.core.env.Environment;
 
 import javax.sql.DataSource;
 
-
+@Profile("prod")
 @Configuration
 @PropertySource("classpath:db.properties")
 public class DataSourceConfig {

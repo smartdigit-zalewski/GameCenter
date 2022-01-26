@@ -1,6 +1,8 @@
 package com.smartdigit.zalewski.gamecenter.domain;
 
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.stereotype.Component;
@@ -12,6 +14,8 @@ import java.util.Objects;
 @Getter
 @Setter
 @Entity
+@Builder
+@AllArgsConstructor
 @Table(name = "player")
 @Component
 public class Player extends BaseEntity{

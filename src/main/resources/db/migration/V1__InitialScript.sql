@@ -5,11 +5,6 @@ CREATE TABLE users (
 
 );
 
-INSERT INTO users (username, password, enabled) VALUES
-('admin','{noop}1234',1 ),
-('user','{noop}1234',1);
-
-
 
 CREATE TABLE authorities (
                              username VARCHAR(50),
@@ -19,9 +14,6 @@ CREATE TABLE authorities (
 
 );
 
-INSERT INTO authorities (username, authority) VALUES ('admin','ROLE_ADMIN'),
-                                                     ('admin','ROLE_USER'),
-                                                     ('user','ROLE_USER');
 
 CREATE TABLE player (
 
@@ -32,7 +24,7 @@ CREATE TABLE player (
                         games_played INT
 );
 
-INSERT INTO player (username, email, total_score, games_played) VALUES ('admin', 'admin@abc.pl',0,0), ('user', 'user@abc.pl',0,0);
+
 
 CREATE TABLE game (
 
