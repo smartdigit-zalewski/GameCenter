@@ -1,0 +1,20 @@
+#!/bin/sh
+
+# build spring app image
+sudo docker build -t smartidigit-zalewski/game-center .
+
+# create network
+sudo docker network create game-center-network
+
+# start db container
+sudo docker run -d -p 5432:5432 --rm --name pgdb --net game-center-network -e POSTGRES_PASSWORD=postgres postgres
+
+# start spring container
+sudo docker run -d -p 8080:8080 --rm --name game-center --net game-center-network \
+    -e SPRING_PROFILES_ACTIVE=dev \
+    -e SPRING_DATASOURCE_URL=jdbc:postgresql://pgdb:5432/gamecenter \
+    -e SPRING_DATASOURCE_PASSWORD=postgres \
+    -e SPRING_DATASOURCE_USERNAME=postgres \
+    smartidigit-zalewski/game-center
+
+
