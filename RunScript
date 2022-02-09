@@ -12,7 +12,7 @@ sudo docker run -d -p 5432:5432 --rm --name pgdb --net game-center-network \
                 -e POSTGRES_PASSWORD=postgres postgres
 
 # start spring container
-sudo docker run -it -p 8080:8080 --rm --name game-center --net game-center-network \
+sudo docker run -d -p 8080:8080 --rm --name game-center --net game-center-network \
     -e SPRING_PROFILES_ACTIVE=docker \
     -e SPRING_DATASOURCE_PASSWORD=postgres \
     -e SPRING_DATASOURCE_USERNAME=postgres \
