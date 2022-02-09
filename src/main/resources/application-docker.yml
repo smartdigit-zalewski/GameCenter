@@ -1,0 +1,10 @@
+#
+# Used for docker container DB
+# Initial tables created by flyway
+#
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: validate
+  datasource:
+    url: jdbc:postgresql://pgdb:5432/postgres
